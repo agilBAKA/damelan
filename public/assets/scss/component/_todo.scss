@@ -1,0 +1,82 @@
+.todo {
+	width: 50%;
+	height: 100%;
+	float: right;
+	padding: 80px;
+	background: #4c576a;	
+	color: #bdbec1;
+	.containerDamelan {
+		position: relative;
+		.titlePage {
+			color: #bdbec1;
+		}
+
+		.addTodo {
+			position: absolute;
+			right: 0px;
+		    top: 4px;
+		    font-size: 26px;
+		    color: #bdbec1;
+		    cursor: pointer;
+		    @include transition(all .3s);
+		    &:hover {
+		    	color: #24cf5f;
+		    }
+		}
+
+		.countTodo {
+			font-weight: 600;
+			color: #bdbec1;
+		}
+
+
+		.boxedListToDo {
+			padding-top: 30px;
+
+			li {
+				
+				div.content-todo {
+					position: relative;
+					overflow: hidden;
+					border-bottom: 1px solid  #586273;
+					padding: 15px 0px;
+					h1 {
+						font-size: 600;
+						font-size: 18px;
+						display: block;
+						padding-bottom: 5px;
+					}
+
+					time {
+						font-size: 13px;
+						font-weight: 700;
+						color: #8c9099;
+					}
+
+					.box-select {
+						position: absolute;
+					    right: 10px;
+					    top: 50%;
+					    margin-top: -7px;
+
+					    .material_checkbox:after {
+						    background: rgb(76, 87, 106);
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+.clear {
+	color: #A0A0A0;
+    float: right;
+    display: inline-block;
+    margin-top: 13px;
+    font-size: 11px;
+    text-decoration: none;
+    &:hover {
+    	color: #FF5722;
+    }
+}

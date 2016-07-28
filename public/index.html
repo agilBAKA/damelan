@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="damelanApp">
+<head>
+	<meta charset="UTF-8">
+  	<meta name="viewport" content="initial-scale=1" />
+	<title>Damelan Web App</title>
+	<link rel="stylesheet" href="assets/css/style.css">
+	<link rel="stylesheet" href="bower_components/material-design-iconic-font/dist/css/material-design-iconic-font.min.css">
+	<script type="text/javascript" src="bower_components/angular/angular.js"></script>
+  	<script type="text/javascript" src="bower_components/firebase/firebase.js"></script>
+  	<script type="text/javascript" src="bower_components/angularfire/dist/angularfire.js"></script>
+	<script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
+
+	<link rel="apple-touch-icon" sizes="57x57" href="assets/images/fav/apple-icon-57x57.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="assets/images/fav/apple-icon-60x60.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="assets/images/fav/apple-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="assets/images/fav/apple-icon-76x76.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="assets/images/fav/apple-icon-114x114.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="assets/images/fav/apple-icon-120x120.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="assets/images/fav/apple-icon-144x144.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="assets/images/fav/apple-icon-152x152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="assets/images/fav/apple-icon-180x180.png">
+	<link rel="icon" type="image/png" sizes="192x192"  href="assets/images/fav/android-icon-192x192.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="assets/images/fav/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="assets/images/fav/favicon-96x96.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="assets/images/fav/favicon-16x16.png">
+	<link rel="manifest" href="assets/images/fav/manifest.json">
+	<meta name="msapplication-TileColor" content="#ffffff">
+	<meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+	<meta name="theme-color" content="#ffffff">
+
+	<!--<script type="text/javascript" src="bower_components/angular-animate/angular-animate.js"></script>
+	<script type="text/javascript" src="bower_components/angular-aria/angular-aria.js"></script>
+	<script type="text/javascript" src="bower_components/angular-material/angular-material.js"></script> -->
+</head>
+
+<body>
+<div class="damelan-logo">
+	<img src="assets/images/logo-damelan.png" alt="">
+</div>
+<section id="boxedDamelan">
+	<section class="box-list" ng-controller="datalinks">
+		 <to-do-links></to-do-links>
+ 	</section>
+	<section class="todo" ng-controller="dataTodo">
+ 		<to-do-template></to-do-template>
+	</section>
+</section>
+	<script type="text/javascript">
+  		var DamelanApps = angular.module('damelanApp',['firebase']);
+
+  		// controller for apps
+  			DamelanApps.controller('dataTodo', function($scope,$firebaseArray) {
+			var impDamelanTodo = new Firebase('https://damelan.firebaseio-demo.com/todo');
+  			$scope.dataTodo = $firebaseArray(impDamelanTodo);
+
+ 			$scope.tambahTodo = function() {
+	 			$scope.dataTodo.$add({
+					work 		: $scope.todobaru.work,
+					deadline	: $scope.todobaru.deadline.getTime()
+				});
+				$scope.todobaru.work = '';
+				$scope.todobaru.deadline = '';
+			};
+
+   		// 	$scope.dataTodo = [
+	  		// 	// {work : 'Bugs', deadline:'26 desember 2016' },
+	  		// 	// {work : 'landingPage', deadline:'30 desember 2016' }
+	  		// ];
+
+	  		$scope.getTotalTodos = function () {
+			    return $scope.dataTodo.length;
+		  	};
+
+		  	$scope.removeTodo = function() {
+			   $scope.dataTodo.forEach(function(listTodo) {
+		            if (listTodo.checked) {
+		                $scope.dataTodo.$remove(listTodo);
+		            }
+		        });
+			};
+
+		});
+
+		//  template link Lists
+  			DamelanApps.directive('toDoLinks', function(){
+				return{
+					restirct 	: 'E',
+					templateUrl	:'site.html'
+				}
+			});
+
+
+  		//  template To DO
+  			DamelanApps.directive('toDoTemplate', function(){
+				return{
+					restirct 	: 'E',
+					templateUrl	:'todo.html'
+				}
+			}); 
+
+
+  		// controller for apps
+  			DamelanApps.controller('datalinks', function($scope, $firebaseArray) {
+			var impDamelanLink = new Firebase('https://damelan.firebaseio-demo.com/links');
+  			$scope.datalink = $firebaseArray(impDamelanLink);
+ 			$scope.tambahLink = function() {
+	 			$scope.datalink.$add({
+					nama 		: $scope.linkbaru.nama,
+					linkurl 	: $scope.linkbaru.linkurl,
+					iconlink 	: $scope.linkbaru.iconlink
+				});
+				$scope.linkbaru.nama = '';
+				$scope.linkbaru.linkurl = '';
+				$scope.linkbaru.iconlink = '';
+			};
+
+
+	  	});
+
+		
+
+	  	$(document).ready(function(){
+	  		
+	  		// modal list links
+	  		$(document).on('click', '.close', function(){
+	  			$('.modal-site').addClass('hide-modal');
+	  			$('.modal-site').removeClass('show-modal');
+	  			$('.modal-site').hide();
+	  			$('.modal-site').animate({
+	  				opacity: 0
+	  			},500, function(){
+	  				// 
+	  			});
+	  		});
+	  		
+	  		$(document).on('click', '.btn-show-modal', function(){
+	  			$('.modal-site').show();
+	  			$('.modal-site').addClass('show-modal');
+	  			$('.modal-site').animate({
+	  				opacity: 1
+	  			},500, function(){
+	  				// 
+	  			});
+ 	  		});
+
+ 	  		// modal list toDo
+	  		$(document).on('click', '.close-todo', function(){
+	  			$('.modal-todo').removeClass('show-modal');
+	  			$('.modal-todo').addClass('hide-modal');
+	  			$('.modal-todo').hide();
+	  			$('.modal-todo').animate({
+	  				opacity: 0
+	  			},500, function(){
+	  				// 
+	  			});
+	  		});
+	  		
+	  		$(document).on('click', '.addTodo', function(){
+	  			$('.modal-todo').show();
+	  			$('.modal-todo').addClass('show-modal');
+	  			$('.modal-todo').animate({
+	  				opacity: 1
+	  			},500, function(){
+	  				// 
+	  			});
+ 	  		});
+
+
+
+
+	  	});
+
+			// impDamelan.set({
+			// 	title: "Damelan Web Apps",
+			// 	author: "agilBAKA",
+			// 	website: "http://agilbaka.com",
+	 	// 	});
+			// return;
+			// return false;
+	  	
+	  		// $scope.datalink = [
+	  		// 	{nama : 'TLab', linkurl: 'http://tlab.co.id/', iconlink : 'assets/images/tlab.jpg'},
+	  		// 	{nama : 'Facebook', linkurl: 'https://facebook.com/agilbaka', iconlink : 'assets/images/fb.jpg'},
+	  		// 	{nama : 'Twitter', linkurl: 'https://twitter.com/agilBAKA', iconlink : 'assets/images/tw.jpg'},
+	  		// 	{nama : 'Gibbon', linkurl: 'https://gibbon.com/feed', iconlink : 'assets/images/gibbon.png'},
+	  		// 	{nama : 'Dribbble', linkurl: 'https://dribbble.com/agilbaka', iconlink : 'assets/images/dribbble.jpg'}
+	  		// ];
+
+	  		// if the messages are empty, add something for fun!
+			    // $scope.datalink.$loaded(function() {
+			    //   if ($scope.datalink.length === 0) {
+			    //     $scope.datalink.$add([
+			    //     	{nama : 'TLab', linkurl: 'http://tlab.co.id/', iconlink : 'assets/images/tlab.jpg'}
+			    //     ]);
+			    //   }
+			    // });
+	 
+  </script>
+</body>
+</html>

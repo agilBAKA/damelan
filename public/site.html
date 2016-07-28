@@ -1,0 +1,30 @@
+<div class="containerDamelan">
+	<h1 class="titlePage">Your awesome site</h1>
+	<ul class="listLink">
+	 	<li ng-repeat="listlink in datalink">
+	 		<a ng-href="{{ listlink.linkurl }}" target="_blank">
+				<figure class="icon-link">
+					<img src="{{ listlink.iconlink}}" alt="">
+	 			</figure>
+	 			<h1>{{ listlink.nama }}</h1>
+	 		</a>
+	 	</li>
+	 	<li class="lal">
+	 		<div class="addLink btn-show-modal"><i class="zmdi zmdi-plus"></i></div>
+ 			<span>add link</span>
+ 	 	</li>
+	</ul>
+	<section class="box-modal modal-site hide-modal">
+		<div class="input-data">
+			<div class="close"><i class="zmdi zmdi-close-circle-o"></i></div>
+			<h1>Add Link</h1>
+			<form novalidate>
+				<input type="text" ng-model="linkbaru.nama" placeholder="site's Name" required>
+				<input type="text" ng-model="linkbaru.linkurl" placeholder="Link's URL" required>
+				<input type="text" ng-model="linkbaru.iconlink" placeholder="Icon' URL" required>
+				<button class="button disable" disabled>Create new link</button>
+				<button type="submit" ng-click="tambahLink()" class="button close">Create new link</button>
+			</form>
+		</div>
+	</section>
+</div>

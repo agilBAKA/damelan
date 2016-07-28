@@ -1,0 +1,30 @@
+<div class="containerDamelan">	
+	<div class="addTodo"><i class="zmdi zmdi-plus-circle-o"></i></div>
+	<h1 class="titlePage">To Do List</h1>
+	<label class="countTodo">{{getTotalTodos()}} things to do</label>
+	<ul class="boxedListToDo">
+ 	 	<li ng-repeat="listTodo in dataTodo | orderBy:'deadline'">
+	 		<div class="content-todo">
+	 			<h1 ng-maxlength="3"> {{ listTodo.work }}</h1> 
+	 			<time> Deadline at {{ listTodo.deadline | date:  "EEEE, dd MMMM yyyy"}} </time>
+	 			<div class="box-select">
+	 				<input type="checkbox" ng-model="listTodo.checked" class="material_checkbox">
+	 			</div>
+	 		</div>
+	 	</li>
+	 	<a href="" class="clear" ng-click="removeTodo()"><i class="zmdi zmdi-delete"></i> Clear completed</a>
+  	</ul>
+</div>
+<section class="box-modal modal-todo hide-modal">
+	<div class="input-data">
+	<div class="close close-todo"><i class="zmdi zmdi-close-circle-o"></i></div>
+	<h1>Add To Do</h1>
+	<form novalidate style="padding-top:15px;">
+		<label class="labels">Your Work</label>
+		<input type="text" ng-model="todobaru.work" placeholder="Write here..." required>
+		<label class="labels">Deadline</label>
+		<input type="date" ng-model="todobaru.deadline" placeholder="deadline" required>
+ 		<button class="button disable" disabled>Add</button>
+		<button type="submit" ng-click="tambahTodo()" class="button close-todo">Add</button>
+	</form>
+</section>
